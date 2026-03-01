@@ -1,0 +1,93 @@
+AI for Health – Breathing Irregularity Detection
+
+About Me
+Myself Lalitha Janneti, and I am currently a B.Tech second year student  in Computer Science and Engineering. I am interested in Machine Learning, Artificial Intelligence, and solving real-world problems using data.
+Through this project, I aimed to understand how physiological signals can be used to detect health-related conditions. I wanted to gain hands-on experience in signal processing, dataset preparation, and deep learning model implementation.
+This project helped me combine theoretical knowledge with practical implementation in the healthcare domain.
+1. What This Project Is About
+In this project, I worked on detecting abnormal breathing patterns during sleep. The goal was to identify breathing problems such as apnea and hypopnea using physiological signals collected overnight from participants.
+The dataset contained 8 hours of sleep data for each participant. My task was to process the signals, prepare the dataset, build a model, and evaluate its performance.
+2. What I Learned
+Through this project, I learned:
+    • How to handle real biomedical time-series data
+    • How to clean messy raw text files
+    • How to apply signal processing techniques
+    • How to split continuous signals into windows
+    • How to label windows using event overlap
+    • How to handle different sampling rates
+    • How to build a 1D CNN model for time-series classification
+    • How to evaluate models using proper cross-validation
+This project helped me understand both signal processing and deep learning together.
+3. Understanding the Data
+Each participant had the following signals:
+    • Nasal Airflow (32 Hz)
+    • Thoracic Movement (32 Hz)
+    • SpO₂ (4 Hz)
+    • Event file containing abnormal breathing intervals
+The signals were long time-series data collected over 8 hours.
+Before building a model, I first visualized the signals to understand their behavior. I plotted airflow, thoracic movement, and oxygen levels, and highlighted breathing events on the graphs.
+This helped me clearly see how abnormal breathing affects airflow and oxygen saturation.
+4. Signal Processing
+Normal breathing usually occurs between 10 and 24 breaths per minute. This corresponds to a frequency range of 0.17 Hz to 0.4 Hz.
+To remove noise and keep only relevant breathing information, I applied a bandpass filter between 0.17 Hz and 0.4 Hz to:
+    • Nasal airflow
+    • Thoracic movement
+This helped in keeping only meaningful breathing patterns and removing unwanted signal noise.
+5. Creating the Dataset
+Sleep studies usually analyze data in 30-second intervals. So I divided the signals into:
+    • 30-second windows
+    • 50% overlap between windows
+The overlap increases the number of samples and helps capture transitions between breathing states.
+For labeling:
+    • If a window overlapped more than 50% with an annotated breathing event, I labeled it with that event.
+    • Otherwise, I labeled it as Normal.
+This created a structured dataset where each window contains:
+    • Airflow data
+    • Thoracic movement data
+    • SpO₂ data
+    • Label
+    • Participant ID
+6. Handling Different Sampling Rates
+Airflow and thoracic signals were sampled at 32 Hz, but SpO₂ was sampled at 4 Hz.
+To combine all three signals into one model, I upsampled the SpO₂ signal so that all signals had the same time length per window.
+This allowed the CNN model to process them together correctly.
+7. Model Implementation
+I built a 1D Convolutional Neural Network (1D CNN) to classify breathing patterns.
+I chose 1D CNN because:
+    • The data is time-series.
+    • CNN can learn local patterns in breathing signals.
+    • It works well for physiological signals.
+The model takes three input channels:
+    • Airflow
+    • Thoracic movement
+    • SpO₂
+It outputs the predicted breathing class.
+8. Evaluation Method
+Instead of randomly splitting data, I used Leave-One-Participant-Out Cross Validation.
+This means:
+    • Train on 4 participants
+    • Test on the remaining participant
+    • Repeat for all 5 participants
+This method ensures the model is tested on unseen participants and avoids overfitting to a specific person.
+9. Results and Observations
+The model was able to classify breathing patterns with reasonable accuracy.
+Performance varied slightly between participants, which shows that breathing patterns differ between individuals.
+Using Leave-One-Participant-Out validation helped ensure fair evaluation.
+10. Challenges I Faced
+    • Handling messy raw signal files
+    • Parsing event annotation files correctly
+    • Managing different sampling rates
+    • Avoiding data leakage
+    • Correctly calculating overlap for labeling
+Solving these problems helped me improve my debugging and data processing skills.
+
+11. What This Project Demonstrates
+This project demonstrates that I can:
+    • Work with real-world medical data
+    • Apply signal filtering
+    • Build time-series datasets
+    • Implement deep learning models
+    • Use correct evaluation strategies
+    • Debug and fix data-related errors
+12. Conclusion
+This project helped me understand how signal processing and deep learning can be combined to solve real healthcare problems. 
